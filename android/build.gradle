@@ -1,0 +1,30 @@
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
+buildscript {
+    repositories {
+        google()  // Make sure this line is added
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.0.2' // Ensure the plugin version is compatible
+        classpath 'com.google.gms:google-services:4.4.2'
+    }
+}
+//implementation 'com.google.android.gms:play-services-maps:17.0.1'
+//implementation 'com.google.maps.android:maps-utils-ktx:2.2.0'
